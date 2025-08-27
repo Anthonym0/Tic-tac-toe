@@ -17,7 +17,22 @@ Game::Game(std::string name, int w, int h)
     }
 }
 
+void Game::Restart() {
+    this->victory = false;
+    this->equality = false;
+    this->player_turn = -2;
+    this->cells.clear();
+    this->cells.resize(3);
 
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            Cell cell(100 * (j + 1) + 5, 100 * (i + 1) + 5, 90, 90);
+            cell.setPlayer(-1);
+            cell.setPositions(j + 1, i + 1);
+            this->cells[i].push_back(cell);
+        }
+    }
+}
 
 int Game::getWidth() { return this->width; };
 int Game::getHeight() { return this->height; };
@@ -61,13 +76,10 @@ void Game::PlayBox(int y, int x, int player) {
     this->cells[y][x].setPlayer(player);
 
 
-    if (CheckVictory(player)) {
+    if (CheckVictory(player))
         this->victory = true;
-        this->winner = player;
-    }
-    if (CheckEquality()) {
+    if (CheckEquality())
         this->equality = true;
-    }
     
     if (player == -2)
         this->player_turn = -3;
@@ -83,10 +95,6 @@ int Game::getPlayerTurn() { return this->player_turn; };
 
 bool Game::getVictory() {
     return this->victory;
-}
-
-int Game::getWinner() {
-    return this->winner;   
 }
 
 bool Game::getEquality() { return this->equality; };

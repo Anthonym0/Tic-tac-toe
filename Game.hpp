@@ -12,7 +12,6 @@ class Game
         int player_turn;
         bool victory;
         bool equality;
-        int winner;
 
         bool CheckVictory(int player);
         bool CheckEquality();
@@ -27,6 +26,6 @@ class Game
         void PlayBox(int y, int x, int player);
         bool getVictory();
         bool getEquality();
-        int getWinner();
+        void Restart();
 };
 

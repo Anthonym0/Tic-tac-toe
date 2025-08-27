@@ -70,17 +70,21 @@ void RenderGame() {
 
     float cellSize = 100;
     float radius = cellSize * 0.32;
-    if (game_info.getVictory()) {
-        if (game_info.getWinner() == -2)
-            DrawText("Winner is : CIRCLE", cellSize, cellSize - 45, 20, BLACK);
-        else 
-            DrawText("Winner is : CROSS", cellSize, cellSize - 45, 20, BLACK);
-    } else if (game_info.getEquality())
+    if (game_info.getVictory())
+        DrawText("Congratulations, you won the game!", cellSize, cellSize - 45, 20, BLACK);
+    else if (game_info.getEquality())
         DrawText("Equality! No winner for this party.", cellSize, cellSize - 45, 20, BLACK);
     else
         DrawText("It's the player's turn: ", cellSize, cellSize - 45, 20, BLACK);
     
-    if (!game_info.getEquality()) {
+    if (game_info.getVictory() || game_info.getEquality()) {
+        DrawText("Press R to restart", cellSize, cellSize - 25, 20, BLACK);
+        if (IsKeyPressed(KEY_R)) {
+            game_info.Restart();
+        }
+    }
+
+    if (!game_info.getEquality() && !game_info.getVictory()) {
         if (game_info.getPlayerTurn() == CIRCLE) {
             DrawCircle(360, cellSize - 35, 15, RED);
             DrawCircle(360, cellSize - 35, 15 * 0.85, RAYWHITE);
